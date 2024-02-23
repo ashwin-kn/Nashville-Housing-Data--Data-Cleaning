@@ -14,7 +14,7 @@ This project aims to clean and prepare the Nashville housing data for further an
 
 ---
 
-### Standardize Date Format<a name="standardize-date-format"></a>
+### 1. Standardize Date Format<a name="standardize-date-format"></a>
 
 ```sql
 SELECT SaleDate, CONVERT(Date, SaleDate)
