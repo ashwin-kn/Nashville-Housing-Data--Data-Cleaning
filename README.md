@@ -30,7 +30,7 @@ This update statement applies the converted date format to the `SaleDate` column
 
 ---
 
-### Populate Property Address Data<a name="populate-property-address-data"></a>
+### 2. Populate Property Address Data<a name="populate-property-address-data"></a>
 
 ```sql
 SELECT x.ParcelID, x.PropertyAddress, y.ParcelID, y.PropertyAddress, ISNULL(x.PropertyAddress, y.PropertyAddress)
@@ -44,7 +44,7 @@ This query identifies records with missing `PropertyAddress` by comparing rows w
 
 ---
 
-### Breaking out Address into Individual Columns<a name="breaking-out-address-into-individual-columns"></a>
+### 3. Breaking out Address into Individual Columns<a name="breaking-out-address-into-individual-columns"></a>
 
 ```sql
 ALTER TABLE PortfolioProject..NashvilleHousing
@@ -59,7 +59,7 @@ Similar operations are performed for breaking down the city part of the address.
 
 ---
 
-### Change Y and N to Yes and No in "Sold as Vacant" Field<a name="change-y-and-n-to-yes-and-no-in-sold-as-vacant-field"></a>
+### 4. Change Y and N to Yes and No in "Sold as Vacant" Field<a name="change-y-and-n-to-yes-and-no-in-sold-as-vacant-field"></a>
 
 ```sql
 UPDATE PortfolioProject..NashvilleHousing
@@ -72,7 +72,7 @@ This update statement replaces 'Y' with 'Yes' and 'N' with 'No' in the `SoldAsVa
 
 ---
 
-### Remove Duplicates<a name="remove-duplicates"></a>
+### 5. Remove Duplicates<a name="remove-duplicates"></a>
 
 ```sql
 WITH RowNumCTE AS(
@@ -96,7 +96,7 @@ This query utilizes a Common Table Expression (CTE) to assign row numbers to dup
 
 ---
 
-### Delete Unused Columns<a name="delete-unused-columns"></a>
+### 6. Delete Unused Columns<a name="delete-unused-columns"></a>
 
 ```sql
 ALTER TABLE PortfolioProject..NashvilleHousing
