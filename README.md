@@ -47,7 +47,9 @@ SET PropertyAddress = ISNULL(x.PropertyAddress, y.PropertyAddress)
 ```
 Explanation:
 - The first `SELECT` statement retrieves the records where the 'PropertyAddress' is null, ordered by 'ParcelID'.
-- The subsequent queries populate missing 'PropertyAddress' values by matching records with the same 'ParcelID' from different instances of the dataset.
+- Then, the `UPDATE` statement utilizes the results obtained from the previous `SELECT` query to update the PropertyAddress for records with `NULL` values in the 'x' instance.
+- It sets the PropertyAddress in 'x' to the address found in 'y' (if available) using the `ISNULL` function.
+- By doing so, it effectively populates missing property addresses based on information from other records with the same ParcelID.
 
 ### 3. Breaking out Address into Individual Columns (Address, City, State)<a name="breaking-out-address-into-individual-columns-address-city-state"></a>
 ```sql
@@ -102,7 +104,7 @@ WHERE row_num > 1;
 Explanation:
 - This query uses a Common Table Expression (CTE) to assign row numbers based on certain columns' values.
 - Rows with duplicate values in specified columns ('ParcelID', 'PropertyAddress', 'SalePrice', 'SaleDate', 'LegalReference') are identified.
-- Using DELETE, duplicate rows are removed, keeping only one instance of each unique combination.
+- Using `DELETE`, duplicate rows are removed, keeping only one instance of each unique combination.
 
 ### 6. Delete Unused Columns<a name="delete-unused-columns"></a>
 ```sql
@@ -113,8 +115,8 @@ SELECT *
 FROM PortfolioProject..NashvilleHousing;
 ```
 Explanation:
-- The ALTER TABLE statement removes the specified columns ('PropertyAddress', 'SaleDate', 'OwnerAddress', 'TaxDistrict') from the dataset which are not needed.
-- Following this alteration, a SELECT statement displays the updated structure of the dataset with the dropped columns.
+- The `ALTER TABLE` statement removes the specified columns ('PropertyAddress', 'SaleDate', 'OwnerAddress', 'TaxDistrict') from the dataset which are not needed.
+- Following this alteration, a `SELECT` statement displays the updated structure of the dataset without the dropped columns.
 
 ---
 
