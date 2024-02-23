@@ -55,7 +55,7 @@ SET PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', Property
 ```
 These statements add a new column `PropertySplitAddress` to the table and populate it with the part of `PropertyAddress` before the comma.
 
-Similar operations are performed for breaking down the city part of the address.
+Similar operations are performed for breaking down the city part of the address, i.e., `PropertySplitCity`.
 
 ---
 
