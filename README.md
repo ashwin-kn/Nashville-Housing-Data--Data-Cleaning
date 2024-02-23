@@ -86,7 +86,6 @@ SELECT *,
 				 ORDER BY UniqueID) AS row_num
 FROM PortfolioProject..NashvilleHousing
 )
-
 SELECT *
 FROM RowNumCTE
 WHERE row_num > 1
