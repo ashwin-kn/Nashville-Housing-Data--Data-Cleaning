@@ -22,10 +22,13 @@ SET SaleDate = CONVERT(Date, SaleDate)
 -- If it doesn't Update properly
 
 ALTER TABLE PortfolioProject..NashvilleHousing
-ALTER COLUMN SaleDate Date
+ADD SaleDateConverted Date
 
 UPDATE PortfolioProject..NashvilleHousing
-SET SaleDate = CONVERT(Date, SaleDate)
+SET SaleDateConverted = CONVERT(Date, SaleDate)
+
+
+
 
 
 --------------------------------------------------------------------------------------------------------------------------
@@ -63,10 +66,6 @@ SET PropertyAddress = ISNULL(x.PropertyAddress, y.PropertyAddress)
 
 -- Breaking out Address into Individual Columns (Address, City, State)
 
-
-SELECT PropertyAddress
-FROM PortfolioProject..NashvilleHousing
-
 SELECT 
 SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1) AS PropertySplitAddress,
 SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +1, LEN(PropertyAddress)) AS PropertySplitCity
@@ -86,15 +85,10 @@ ADD PropertySplitCity NVARCHAR(255);
 UPDATE PortfolioProject..NashvilleHousing
 SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +1, LEN(PropertyAddress))
 
-SELECT *
-FROM PortfolioProject..NashvilleHousing
 
 
 
 
-
-SELECT OwnerAddress
-FROM PortfolioProject..NashvilleHousing
 
 SELECT PARSENAME(REPLACE(OwnerAddress, ',', '.'), 3),
  PARSENAME(REPLACE(OwnerAddress, ',', '.'), 2),
@@ -122,6 +116,8 @@ ADD OwnerSplitState NVARCHAR(255);
 
 UPDATE PortfolioProject..NashvilleHousing
 SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 1)
+
+
 
 
 
@@ -153,8 +149,6 @@ SET SoldAsVacant = CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
 
 
 
-
-
 --------------------------------------------------------------------------------------------------------------------------
 
 -- Remove Duplicates
@@ -169,20 +163,11 @@ SELECT *,
 				 SaleDate,
 				 LegalReference
 				 ORDER BY UniqueID) AS row_num
-FROM PortfolioProject..NashvilleHousing
---ORDER BY ParcelID
-)
-
-SELECT *
+FROM PortfolioProject..NashvilleHousing)
+DELETE
 FROM RowNumCTE
 WHERE row_num > 1
-ORDER BY PropertyAddress
 
-
-
-
-SELECT *
-FROM PortfolioProject..NashvilleHousing
 
 
 
@@ -192,10 +177,8 @@ FROM PortfolioProject..NashvilleHousing
 -- Delete Unused Columns
 
 
+ALTER TABLE PortfolioProject..NashvilleHousing
+DROP COLUMN PropertyAddress, SaleDate, OwnerAddress, TaxDistrict
 
 SELECT *
 FROM PortfolioProject..NashvilleHousing
-
-
-ALTER TABLE PortfolioProject..NashvilleHousing
-DROP COLUMN PropertyAddress, OwnerAddress, TaxDistrict
